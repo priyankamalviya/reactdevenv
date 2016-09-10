@@ -5,77 +5,45 @@ class App extends React.Component{
     constructor(){
         super();
         this.state = {
-            red: 0
-        }
-        this.update = this.update.bind(this);
+            data: [
+                {id: 1, name: "Priyanka Malviya"},
+                {id: 2, name: "Sharanya Nair"},
+                {id: 3, name: "Elon Musk"},
+                {id: 4, name: "Steve Jobs"},
+                {id: 5, name: "Robin Sharma"},
+                {id: 6, name: "Nelson Mandela"},
+                {id: 7, name: "Travis Neilson"},
+                {id: 8, name: "Taylor Swift"},
+                {id: 9, name: "Jeff Weiner"},
+                {id: 10, name: "Michelangelo"},
+                {id: 11, name: "Allen Turing"},
+                {id: 12, name: "Nicholas Zakas"},
+                {id: 13, name: "Douglas Crockford"},
+                {id: 14, name: "Auster Chen"},
+                {id: 15, name: "Gabriel Bull"},
+                {id: 16, name: "Howard Chang"},
+                {id: 17, name: "Josh David Miller"},
+                {id: 18, name: "Yuriy Linnyk"}
+            ]}
     }
 
-    update(){
-        this.setState({
-            red: ReactDOM.findDOMNode(this.refs.red.refs.inp).value
+    render(){
+        let rows = this.state.data.map(person => {
+            return <PersonRow key={person.id} data={person} />
         })
-    }
-
-    render(){
-        return (
-            <div>
-                <NumInput
-                    ref="red"
-                    min={0}
-                    max={255}
-                    step={0.61}
-                    val={+this.state.red}
-                    label="Red"
-                    update={this.update} />
-            </div>
-        );
+        return <table>
+            <tbody>
+            {rows}
+            </tbody>
+        </table>
     }
 }
 
-class NumInput extends React.Component{
-
-    render(){
-
-        let label = this.props.label !== ''?
-        <label>{this.props.label} - {this.props.val}</label>: ''
-
-        return (
-            <div>
-               <input
-               ref="inp"
-               type={this.props.type}
-               min={this.props.min}
-               max={this.props.max}
-               step={this.props.step}
-               defaultValue={this.props.val}
-               onChange={this.props.update} />
-                    {label}
-            </div>
-        );
-    }
-
-
-
-}
-
-NumInput.propTypes = {
-    min: React.PropTypes.number,
-    max: React.PropTypes.number,
-    step: React.PropTypes.number,
-    val: React.PropTypes.number,
-    label: React.PropTypes.string,
-    update: React.PropTypes.func.isRequired,
-    type: React.PropTypes.oneOf(['number', 'range'])
-}
-
-
-NumInput.defaultProps = {
-    min: 0,
-    max: 0,
-    step: 1,
-    val: 0,
-    label: '',
-    type: 'range'
+const PersonRow = (props) =>{
+    return <tr>
+        <td>{props.data.id}</td>
+        <td>{props.data.name}</td>
+    </tr>
 }
 
 ReactDOM.render(
