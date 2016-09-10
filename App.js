@@ -5,39 +5,59 @@ class App extends React.Component{
     constructor(){
         super();
         this.state = {
-            txt: 'This is the state text',
-            cat: 0
-        }
+            red: 0,
+            green: 0,
+            blue: 0
+        };
+        this.update = this.update.bind(this);
     }
 
     update(e){
-        this.setState({txt: e.target.value})
+        this.setState({
+            red: ReactDOM.findDOMNode(this.refs.red.refs.inp).value,
+            green: ReactDOM.findDOMNode(this.refs.green.refs.inp).value,
+            blue: ReactDOM.findDOMNode(this.refs.blue.refs.inp).value
+        })
     }
 
     render(){
-        let txt = this.state.txt;
+
         return (
             <div>
-                <h1>Hello There</h1>
-                <b>{txt}</b>
-                <input type="text" onChange={this.update.bind(this)} />
+
+                <hr />
+                <Slider  ref="red" update = {this.update} />
+                {this.state.red}
+                <br />
+
+                <Slider ref="green" update = {this.update} />
+                {this.state.green}
+                <br />
+
+                <Slider ref="blue" update = {this.update} />
+                {this.state.blue}
+
             </div>
         );
     }
 }
 
-// App.propTypes = {
-//     txt: React.PropTypes.string,
-//     cat: React.PropTypes.number.isRequired
-// };
+class Slider extends React.Component{
+    render(){
+        return (
+            <div>
+                <input type="range"
+                       min ="0"
+                       max="255"
+                       ref="inp"
+                       onChange={this.props.update} />
 
-// App.defaultProps ={
-//   txt: 'This is the default text'
-// };
+            </div>
+        );
+    }
+}
 
-//export default App
-//const App = () => <h1>Heya</h1>
  ReactDOM.render(
-     <App cat ={5} />,
+     <App />,
      document.getElementById('app')
  );
